@@ -1,0 +1,174 @@
+DLINK-DDM-RECONSTRUCTED-MIB DEFINITIONS ::= BEGIN
+
+-- The objects below exist on D-Link DES/DGS-3xxx agents (verified on DGS-3120-24TC
+-- firmware 3.12.R020) under 1.3.6.1.4.1.171.12.72, but D-Link's own DDM MIB is not
+-- publicly available. Object names are ours; meanings were derived from the agent's
+-- data and cross-checked against the thresholds the transceiver reports.
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32
+        FROM SNMPv2-SMI
+    DisplayString
+        FROM SNMPv2-TC
+    dlink-common-mgmt
+        FROM DLINK-ID-REC-MIB;
+
+swDdmReconstructedMIB MODULE-IDENTITY
+    LAST-UPDATED "202610220000Z"
+    ORGANIZATION "dlink-snmp-exporter"
+    CONTACT-INFO "https://hub.docker.com/r/andrewpinkerton/dlink-snmp-exporter"
+    DESCRIPTION
+        "Reconstructed subset of the D-Link DDM (digital diagnostic monitoring)
+         MIB: current SFP readings and the module's alarm/warning thresholds.
+         All values are DisplayStrings with four decimals; ports without a
+         DDM-capable module return '  -'."
+    REVISION "202610220000Z"
+    DESCRIPTION "Initial reconstruction."
+    ::= { dlink-common-mgmt 72 }
+
+swDdmInfo      OBJECT IDENTIFIER ::= { swDdmReconstructedMIB 2 }
+swDdmStatus    OBJECT IDENTIFIER ::= { swDdmInfo 1 }
+swDdmThreshold OBJECT IDENTIFIER ::= { swDdmReconstructedMIB 3 }
+swDdmThresholdMgmt OBJECT IDENTIFIER ::= { swDdmThreshold 1 }
+
+-- Current readings ----------------------------------------------------------
+
+swDdmStatusTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF SwDdmStatusEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "Current DDM readings per port."
+    ::= { swDdmStatus 1 }
+
+swDdmStatusEntry OBJECT-TYPE
+    SYNTAX      SwDdmStatusEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "DDM readings of one port."
+    INDEX       { swDdmStatusPort }
+    ::= { swDdmStatusTable 1 }
+
+SwDdmStatusEntry ::= SEQUENCE {
+    swDdmStatusPort         Integer32,
+    swDdmStatusTemperature  DisplayString,
+    swDdmStatusVoltage      DisplayString,
+    swDdmStatusBiasCurrent  DisplayString,
+    swDdmStatusTxPower      DisplayString,
+    swDdmStatusRxPower      DisplayString
+}
+
+swDdmStatusPort OBJECT-TYPE
+    SYNTAX      Integer32 (1..65535)
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Port number; equals ifIndex on a standalone switch."
+    ::= { swDdmStatusEntry 1 }
+
+swDdmStatusTemperature OBJECT-TYPE
+    SYNTAX      DisplayString
+    UNITS       "degrees Celsius"
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Module temperature."
+    ::= { swDdmStatusEntry 2 }
+
+swDdmStatusVoltage OBJECT-TYPE
+    SYNTAX      DisplayString
+    UNITS       "volts"
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Module supply voltage."
+    ::= { swDdmStatusEntry 3 }
+
+swDdmStatusBiasCurrent OBJECT-TYPE
+    SYNTAX      DisplayString
+    UNITS       "milliamperes"
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Laser bias current."
+    ::= { swDdmStatusEntry 4 }
+
+swDdmStatusTxPower OBJECT-TYPE
+    SYNTAX      DisplayString
+    UNITS       "milliwatts"
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Transmit optical power."
+    ::= { swDdmStatusEntry 5 }
+
+swDdmStatusRxPower OBJECT-TYPE
+    SYNTAX      DisplayString
+    UNITS       "milliwatts"
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Receive optical power."
+    ::= { swDdmStatusEntry 6 }
+
+-- Thresholds ----------------------------------------------------------------
+
+swDdmThresholdTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF SwDdmThresholdEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "Alarm and warning thresholds per port and parameter, in the
+                 units of the corresponding swDdmStatusTable column."
+    ::= { swDdmThresholdMgmt 1 }
+
+swDdmThresholdEntry OBJECT-TYPE
+    SYNTAX      SwDdmThresholdEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION "Thresholds of one parameter of one port."
+    INDEX       { swDdmStatusPort, swDdmThresholdType }
+    ::= { swDdmThresholdTable 1 }
+
+SwDdmThresholdEntry ::= SEQUENCE {
+    swDdmThresholdType         INTEGER,
+    swDdmThresholdHighAlarm    DisplayString,
+    swDdmThresholdLowAlarm     DisplayString,
+    swDdmThresholdHighWarning  DisplayString,
+    swDdmThresholdLowWarning   DisplayString
+}
+
+swDdmThresholdType OBJECT-TYPE
+    SYNTAX      INTEGER {
+                    temperature(1),
+                    voltage(2),
+                    biasCurrent(3),
+                    txPower(4),
+                    rxPower(5)
+                }
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Monitored parameter."
+    ::= { swDdmThresholdEntry 1 }
+
+swDdmThresholdHighAlarm OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "High alarm threshold."
+    ::= { swDdmThresholdEntry 2 }
+
+swDdmThresholdLowAlarm OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Low alarm threshold."
+    ::= { swDdmThresholdEntry 3 }
+
+swDdmThresholdHighWarning OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "High warning threshold."
+    ::= { swDdmThresholdEntry 4 }
+
+swDdmThresholdLowWarning OBJECT-TYPE
+    SYNTAX      DisplayString
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION "Low warning threshold."
+    ::= { swDdmThresholdEntry 5 }
+
+END

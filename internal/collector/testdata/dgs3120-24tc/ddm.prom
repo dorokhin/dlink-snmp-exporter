@@ -1,0 +1,37 @@
+# HELP dlink_sfp_bias_current_amperes Laser bias current.
+# TYPE dlink_sfp_bias_current_amperes gauge
+dlink_sfp_bias_current_amperes{description="",ifindex="22",ifname="1/22",port="1:22"} 0.012272
+# HELP dlink_sfp_rx_power_dbm Receive optical power.
+# TYPE dlink_sfp_rx_power_dbm gauge
+dlink_sfp_rx_power_dbm{description="",ifindex="22",ifname="1/22",port="1:22"} -7.918274733328783
+# HELP dlink_sfp_temperature_celsius Module temperature.
+# TYPE dlink_sfp_temperature_celsius gauge
+dlink_sfp_temperature_celsius{description="",ifindex="22",ifname="1/22",port="1:22"} 47.7396
+# HELP dlink_sfp_threshold DDM alarm/warning threshold, in the unit of the metric named by param.
+# TYPE dlink_sfp_threshold gauge
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_alarm",param="bias_current_amperes",port="1:22"} 0.09
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_alarm",param="rx_power_dbm",port="1:22"} -2.9998893767788766
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_alarm",param="temperature_celsius",port="1:22"} 85
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_alarm",param="tx_power_dbm",port="1:22"} 0
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_alarm",param="voltage_volts",port="1:22"} 3.6
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_warning",param="bias_current_amperes",port="1:22"} 0.08
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_warning",param="rx_power_dbm",port="1:22"} -4.0000782241590205
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_warning",param="temperature_celsius",port="1:22"} 75
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_warning",param="tx_power_dbm",port="1:22"} -1.00015437450609
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="high_warning",param="voltage_volts",port="1:22"} 3.5
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_alarm",param="bias_current_amperes",port="1:22"} 0.001
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_alarm",param="rx_power_dbm",port="1:22"} -21.023729087095585
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_alarm",param="temperature_celsius",port="1:22"} -10
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_alarm",param="tx_power_dbm",port="1:22"} -11.999706407558657
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_alarm",param="voltage_volts",port="1:22"} 2.8
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_warning",param="bias_current_amperes",port="1:22"} 0.002
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_warning",param="rx_power_dbm",port="1:22"} -20
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_warning",param="temperature_celsius",port="1:22"} -5
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_warning",param="tx_power_dbm",port="1:22"} -11.001794975729037
+dlink_sfp_threshold{description="",ifindex="22",ifname="1/22",level="low_warning",param="voltage_volts",port="1:22"} 2.9
+# HELP dlink_sfp_tx_power_dbm Transmit optical power.
+# TYPE dlink_sfp_tx_power_dbm gauge
+dlink_sfp_tx_power_dbm{description="",ifindex="22",ifname="1/22",port="1:22"} -4.199878874705757
+# HELP dlink_sfp_voltage_volts Module supply voltage.
+# TYPE dlink_sfp_voltage_volts gauge
+dlink_sfp_voltage_volts{description="",ifindex="22",ifname="1/22",port="1:22"} 3.2744

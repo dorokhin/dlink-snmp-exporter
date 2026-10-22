@@ -1,0 +1,37 @@
+# dlink_exporter configuration.
+#
+# Prometheus calls /probe?target=<switch>&auth=<auth name>&module=<module name>.
+# `auth` may be omitted when only one auth is defined; `module` defaults to "default".
+# Secrets can reference environment variables as ${NAME}.
+
+auths:
+  public_v2:
+    version: 2
+    community: public
+
+  # SNMPv3 example: create a matching read-only user on the switch first,
+  # export SNMP_AUTH_PASSWORD / SNMP_PRIV_PASSWORD and uncomment.
+  # secure_v3:
+  #   version: 3
+  #   username: monitor
+  #   security_level: authPriv
+  #   auth_protocol: SHA
+  #   auth_password: ${SNMP_AUTH_PASSWORD}
+  #   priv_protocol: AES
+  #   priv_password: ${SNMP_PRIV_PASSWORD}
+
+modules:
+  # system, interfaces, etherlike, rmon, health, ddm, lldp.
+  # Collectors whose MIB the switch does not implement export nothing and still succeed.
+  default:
+    timeout: 5s          # per SNMP request
+    retries: 1
+    max_repetitions: 25
+    # ifType values to export: ethernetCsmacd, gigabitEthernet, ieee8023adLag.
+    # D-Link agents also list VLAN and CPU interfaces in ifTable; [] exports everything.
+    interface_types: [6, 117, 161]
+
+  # MAC address table, scraped separately and less often.
+  fdb:
+    collectors: [fdb]
+    fdb_max_entries: 20000   # fail instead of exporting more entries (MAC flood)

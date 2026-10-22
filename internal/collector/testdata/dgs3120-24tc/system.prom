@@ -1,0 +1,6 @@
+# HELP dlink_device_info Device identification; value is always 1.
+# TYPE dlink_device_info gauge
+dlink_device_info{bootrom="2.00.003",firmware="3.12.R020",firmware_type="EI",hardware="A1",mac="02:00:00:00:00:1b",model="DGS-3120-24TC",serial="SN0000000001",sysname="switch-01",sysobjectid="1.3.6.1.4.1.171.10.117.1.1"} 1
+# HELP dlink_uptime_seconds Time since the agent (re)started (sysUpTime).
+# TYPE dlink_uptime_seconds gauge
+dlink_uptime_seconds 1.276622887e+07

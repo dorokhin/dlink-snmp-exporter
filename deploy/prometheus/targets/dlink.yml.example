@@ -1,0 +1,6 @@
+# Switches to probe. Copy to dlink.yml and list your switches there. Extra labels are attached to every series of the target.
+- targets:
+    - 192.0.2.10
+    - 192.0.2.11
+  labels:
+    site: main

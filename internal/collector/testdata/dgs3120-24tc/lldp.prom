@@ -1,0 +1,4 @@
+# HELP dlink_lldp_neighbor_info Device seen via LLDP on the port; value is always 1.
+# TYPE dlink_lldp_neighbor_info gauge
+dlink_lldp_neighbor_info{chassis_id="02:00:00:00:10:01",description="",ifindex="22",ifname="1/22",port="1:22",port_description="RMON Port 26 on Unit 1",port_id="1/26",system_description="DGS-3120-24SC Gigabit Ethernet Switch",system_name="core-sw"} 1
+dlink_lldp_neighbor_info{chassis_id="ap-lobby",description="",ifindex="24",ifname="1/24",port="1:24",port_description="eth0",port_id="02:00:00:00:10:02",system_description="Access point",system_name="ap-lobby"} 1
